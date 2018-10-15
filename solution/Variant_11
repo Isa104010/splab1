@@ -1,0 +1,7 @@
+lines=$(grep -e 'HTTP/..' log.txt| cut -f11 -d" " | grep -v '"-"' | wc -l);
+echo $lines;
+for i in `grep -e 'HTTP/..' log.txt | cut -f11 -d" "| grep -v '"-"' | sort -t" " -k1 | uniq -c | sort --reverse -k1 -n | head`;
+do if [[ $i =~ ^[0-9]+$ ]]; then
+	 printf "$i -  0$(echo "scale=4; $i / $lines" | bc)%%" ;
+   else printf " - $i \n"; fi  
+done
